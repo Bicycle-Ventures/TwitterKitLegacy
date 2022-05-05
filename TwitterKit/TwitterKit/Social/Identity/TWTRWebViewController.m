@@ -84,11 +84,13 @@
         [[UIApplication sharedApplication] openURL:request.URL];
         decisionHandler(WKNavigationActionPolicyCancel);
     }
-    if ([self shouldStartLoadWithRequest]) {
+    else if ([self shouldStartLoadWithRequest]) {
         BOOL allow = [self shouldStartLoadWithRequest](self, request, navigationAction.navigationType);
         decisionHandler(allow ? WKNavigationActionPolicyAllow : WKNavigationActionPolicyCancel);
     }
-    decisionHandler(WKNavigationActionPolicyAllow);
+    else {
+        decisionHandler(WKNavigationActionPolicyAllow);
+    }
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error
